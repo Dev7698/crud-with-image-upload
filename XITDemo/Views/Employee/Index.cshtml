@@ -1,0 +1,56 @@
+﻿@*@model XITDemo.Models.Employee*@
+@model IEnumerable<XITDemo.Models.Employee>
+@{
+    ViewBag.Title = "Index";
+   WebGrid grid = new WebGrid(source: Model, canPage: true,canSort:true, rowsPerPage: 3);
+  // WebGrid grid = new WebGrid( rowsPerPage: 2);
+    grid.Pager(WebGridPagerModes.NextPrevious);
+}
+
+<h2>Index</h2>
+<style>
+    Grid {
+        border: dashed;
+    }
+</style>
+<tr>
+    <th colspan="7" style="text-align:right"><a  class="btn btn-primary" href="/Employee/Manage?id=0">Add Employee</a></th>
+
+
+    <p>
+        @using (Html.BeginForm("Index", "Employee", FormMethod.Get))
+        {
+            <b> Search by</b> @Html.RadioButton("searchby", "FirstName", true)<b> FirstName</b>
+            @Html.RadioButton("searchby", "LastName") <b> LastName</b>
+            @Html.RadioButton("searchby", "Email") <b> Email</b><br />
+            @Html.TextBox("search") <input type="submit" value=" Search" />
+        }
+    </p>
+</tr>
+<center>
+    @grid.GetHtml(
+    tableStyle: "table table-responsive table-striped table-bordered", mode: WebGridPagerModes.All,
+    firstText: "<< First",
+    previousText: "< Prev",
+    nextText: "Next >",
+    lastText: "Last >>",
+   
+    columns: grid.Columns(
+        grid.Column(columnName: "Id", header: "ID"),
+        grid.Column(columnName: "FirstName", header: "FirstName"),
+        grid.Column(columnName: "LastName", header: "LastName"),
+        grid.Column(columnName: "Gender", header: "Gender"),
+        grid.Column(columnName: "DateOfBirth", header: "DateOfBirth"),
+        grid.Column(columnName: "Email", header: "Email"),
+        grid.Column(columnName: "Phone", header: "Phone"),
+        //grid.Column(columnName: "DepartmentId", header: "DepartmentId"),
+        //grid.Column(columnName: "CityId", header: "CityId"),
+        //grid.Column(columnName: "StateId", header: "StateId"),
+        //grid.Column(columnName: "CountryId", header: "CountryId"),
+        grid.Column(columnName: "PinCode", header: "PinCode"),
+
+        grid.Column(header: "Edit", format:@<a href="/Employee/Manage?id=@item.Id" class="btn btn-success">Edit</a>),
+grid.Column(header: "Delete", format:@<a href="/Employee/Delete?id=@item.Id" class="btn btn-danger">Delete</a>)
+)
+);
+</center>

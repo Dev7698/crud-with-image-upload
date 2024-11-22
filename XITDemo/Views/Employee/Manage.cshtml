@@ -1,0 +1,140 @@
+﻿@model XITDemo.Models.Employee
+@{
+    ViewBag.Title = "Manage";
+}
+
+<h2>Manage</h2>
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#DateOfBirth").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-100:+0",
+            dateFormat: 'dd-M-yy'
+               });
+    });
+</script>
+
+@using (Html.BeginForm("Save", "Employee", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+<table border="1">
+    @Html.HiddenFor(c => c.Id)
+    <tr>
+        <td>@Html.LabelFor(c => c.FirstName)</td>
+        <td>@Html.TextBoxFor(c => c.FirstName)</td>
+        <td>@Html.ValidationMessageFor(c => c.FirstName)</td>
+    </tr>
+    <tr>
+        <td>@Html.LabelFor(c => c.LastName)</td>
+        <td>@Html.TextBoxFor(c => c.LastName)</td>
+        <td>@Html.ValidationMessageFor(c => c.LastName)</td>
+    </tr>
+    <tr>
+        <td>@Html.LabelFor(c => c.Gender)</td>
+        <td>@Html.RadioButtonFor(c => c.Gender, "Male")Male |@Html.RadioButtonFor(c => c.Gender, "Female") Female</td>
+        
+    </tr>
+    <tr>
+        <td>@Html.LabelFor(c => c.DateOfBirth)</td>
+        <td>@Html.TextBoxFor(c => c.DateOfBirth, new { htmlAttributes = new { @class = "datepicker" } })</td>
+        
+    </tr>
+    <tr>
+        <td>@Html.LabelFor(c => c.Email)</td>
+        <td>@Html.TextBoxFor(c => c.Email)</td>
+        <td>@Html.ValidationMessageFor(c => c.Email)</td>
+    </tr>
+    <tr>
+        <td>@Html.LabelFor(c => c.Phone)</td>
+        <td>@Html.TextBoxFor(c => c.Phone)</td>
+       
+    </tr>
+    <tr>
+        <td>@Html.LabelFor(c => c.DepartmentId)</td>
+        <td>@Html.DropDownListFor(c => c.DepartmentId, new SelectList(ViewBag.lstDept as System.Collections.IEnumerable, "Value", "Text"), "Select")</td>
+        
+    </tr>
+
+    <tr>
+        <td>@Html.LabelFor(c => c.City)</td>
+        @*<td>@Html.DropDownListFor(m => m.CityId, Model.Cities, "Please select")</td>*@
+        <td>@Html.DropDownListFor(c => c.CityId, new SelectList(ViewBag.lstCity as System.Collections.IEnumerable, "Value", "Text"), "Select")</td>
+
+    </tr>
+    <tr>
+        <td>@Html.LabelFor(c => c.StateId)</td>
+        <td>@Html.DropDownListFor(c => c.StateId, new SelectList(ViewBag.lstState as System.Collections.IEnumerable, "Value", "Text"), "Select")</td>
+        @*<td>@Html.DropDownListFor(m => m.StateId, Model.States, "Please select", new { onchange = "document.forms[0].submit();"  })</td>*@
+
+    </tr>
+
+    <tr>
+        <td>@Html.LabelFor(c => c.CountryId)</td>
+        <td>@Html.DropDownListFor(c => c.CountryId, new SelectList(ViewBag.lstCountry as System.Collections.IEnumerable, "Value", "Text"), "Select")</td>
+        @*<td> @Html.DropDownListFor(m => m.CountryId, Model.Countries, "Please select", new { onchange = "document.forms[0].submit();" })</td>*@
+    </tr>
+    <tr>
+        <td>@Html.LabelFor(c => c.PinCode)</td>
+        <td>@Html.TextBoxFor(c => c.PinCode)</td>
+       
+    </tr>
+    <tr>
+        <td>@Html.LabelFor(c => c.EmployeePhoto)</td>
+             <td><input type="file" name="httpPostedFileBase" /></td>
+            </tr>
+
+    @*<tr>
+        <td>
+            Hobbies
+        </td>
+        <td>
+            @for (int i = 0; i < Model.Hobbies.Count; i++)
+            {
+                @Html.CheckBoxFor(m => Model.Hobbies[i].Checked)
+                @Model.Hobbies[i].Name
+                @Html.HiddenFor(m => Model.Hobbies[i].Id)
+                @Html.HiddenFor(m => Model.Hobbies[i].Name)
+            }
+        </td>
+        <h1>@ViewBag.chkmsg</h1>
+    </tr>*@
+
+    @*<tr>
+        <td>@Html.LabelFor(c => c.Hobbies)</td>
+        <td>@Html.CheckBoxFor(c => c.Hobbies)</td>
+        <td>@Html.ValidationMessageFor(c => c.LastName)</td>
+    </tr>*@
+
+    @*<tr>
+        <td>@Html.LabelFor(c => c.IsSelected)</td>
+        <td>@Html.CheckBox("IsSelected")</td>
+    </tr>*@
+    <tr>
+        <td colspan="2">
+            <input type="submit" name="Save" value="Save" class="btn btn-primary btn pull-left">
+            <input type="button" class="btn btn-default" value="Cancel" onclick="location.href='@Url.Action("Index","Employee")'" />
+        </td>
+    </tr>
+</table>
+}
+@*<script type="text/javascript">
+    $(function () {
+        if ($("#StateId option").length > 1) {
+            $("#StateId").removeAttr("disabled");
+        }
+
+        if ($("#CityId option").length > 1) {
+            $("#CityId").removeAttr("disabled");
+        }
+
+        if ($("#CountryId").val() != "" && $("#StateId").val() != "" && $("#CityId").val() != "") {
+            var message = "Country: " + $("#CountryId option:selected").text();
+            message += "\nState: " + $("#StateId option:selected").text();
+            message += "\nCity: " + $("#CityId option:selected").text();
+            alert(message);
+        }
+    });
+</script>*@
